@@ -16,6 +16,7 @@
         >
 <!--        circle image in front -->
         <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageView"
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"
             android:layout_gravity="center"
@@ -89,12 +90,14 @@
             android:textColor="@color/colorTextSecondary"/>
 
         <Button
+            android:id="@+id/submit_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_30sdp"
             android:background="@color/colorTextPrimary"
             android:contentDescription="@string/add_contact"
             android:textColor="#311B92"
+            android:text="Submit"
             tools:text="Submit" />
     </LinearLayout>
 
