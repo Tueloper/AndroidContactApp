@@ -1,9 +1,102 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorSecondary"
     tools:context=".AddUpdateContact">
 
-</android.support.constraint.ConstraintLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:padding="@dimen/_5sdp"
+        >
+<!--        circle image in front -->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="@dimen/_70sdp"
+            android:layout_height="@dimen/_70sdp"
+            android:layout_gravity="center"
+            app:civ_border_width="@dimen/_1sdp"
+            app:civ_border_color="@color/colorTextPrimary"
+            android:src="@drawable/ic_baseline_person_24dp"/>
+
+<!--            text for inputs -->
+        <EditText
+            android:id="@+id/personName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/name"
+            android:textColorHint="@color/white"
+            android:background="@drawable/background_input_field"
+            android:inputType="textPersonName"
+            android:padding="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:autofillHints=""
+            android:drawableStart="@drawable/ic_baseline_person_24dp"
+            android:textSize="@dimen/_14sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:textColor="@color/colorTextSecondary"/>
+
+        <EditText
+            android:id="@+id/personPhone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/phone_number"
+            android:textColorHint="@color/white"
+            android:background="@drawable/background_input_field"
+            android:inputType="phone"
+            android:padding="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:autofillHints=""
+            android:drawableStart="@drawable/ic_baseline_local_phone_24dp"
+            android:textSize="@dimen/_14sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:textColor="@color/colorTextSecondary"/>
+
+        <EditText
+            android:id="@+id/personEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/email"
+            android:textColorHint="@color/white"
+            android:background="@drawable/background_input_field"
+            android:inputType="textEmailAddress"
+            android:padding="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:autofillHints=""
+            android:drawableStart="@drawable/ic_baseline_attach_email_24dp"
+            android:textSize="@dimen/_14sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:textColor="@color/colorTextSecondary"/>
+
+        <EditText
+            android:id="@+id/personNote"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/note"
+            android:textColorHint="@color/white"
+            android:background="@drawable/background_input_field"
+            android:inputType="textLongMessage"
+            android:padding="@dimen/_10sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:autofillHints=""
+            android:drawableStart="@drawable/ic_baseline_note_24dp"
+            android:textSize="@dimen/_14sdp"
+            android:drawablePadding="@dimen/_5sdp"
+            android:textColor="@color/colorTextSecondary"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_30sdp"
+            android:background="@color/colorTextPrimary"
+            android:contentDescription="@string/add_contact"
+            android:textColor="#311B92"
+            tools:text="Submit" />
+    </LinearLayout>
+
+
+</RelativeLayout>

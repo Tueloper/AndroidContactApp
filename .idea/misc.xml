@@ -3,6 +3,8 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="app/src/main/res/drawable/background_input_field.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_add_update_contact.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.35989583333333336" />
         <entry key="app/src/main/res/layout/content_main.xml" value="0.3734375" />
         <entry key="app/src/main/res/layout/fragment_first.xml" value="0.3734375" />
