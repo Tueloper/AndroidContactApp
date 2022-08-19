@@ -14,4 +14,7 @@
     <string name="email">Email</string>
     <string name="note">Note</string>
     <string name="add_contact">Add Contact</string>
+    <string name="_08099983784">08099983784</string>
+    <string name="contact_name">Contact Name</string>
+    <string name="title_activity_single_contact">single_contact_activity</string>
 </resources>

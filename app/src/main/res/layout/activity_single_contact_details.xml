@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".SIngleContactDetails">
+
+    <ImageView
+        android:id="@+id/single_contact_imageUrl"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_140sdp"
+        android:src="@mipmap/ic_launcher"
+        android:scaleType="fitXY"/>
+
+    <TextView
+        android:id="@+id/single_contact_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Contact Name"
+        android:textColor="#000"
+        android:textStyle="bold"
+        android:textSize="@dimen/_16sdp"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/_5sdp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="this is the note of a user, you have to have a note to see this user. please contacts should have a note"
+        android:layout_marginHorizontal="@dimen/_20sdp"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:textSize="@dimen/_14sdp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Phone Number:"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp" />
+        <TextView
+            android:id="@+id/single_contact_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="09088776653"
+            android:textStyle="normal"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:textSize="@dimen/_14sdp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Email:"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp" />
+        <TextView
+            android:id="@+id/single_contact_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:hint="contact@gmail.com"
+            android:textStyle="normal"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_50sdp"
+        android:textSize="@dimen/_14sdp"
+        android:orientation="horizontal">
+        <Button
+            android:id="@+id/single_contact_edit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Edit"
+            android:textStyle="bold"
+            android:backgroundTint="#90EE90"
+            android:textColor="@color/white"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp" />
+        <Button
+            android:id="@+id/single_contact_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Delete"
+            android:backgroundTint="#f00"
+            android:textColor="@color/white"
+            android:textStyle="normal"
+            android:layout_gravity="center"
+            android:layout_margin="@dimen/_5sdp" />
+    </LinearLayout>
+
+
+</LinearLayout>
