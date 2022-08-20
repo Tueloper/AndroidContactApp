@@ -22,10 +22,12 @@ public class SIngleContactDetails extends AppCompatActivity {
     private ImageView contactImage;
     private Button editContactBtn, deleteContactBtn;
     private String name, phone, email, imageUrl, note;
-    private String id;
+    private int id;
     private int mContactId;
     private ActionBar actionBar;
     private ContactViewModel mContactViewModel;
+    public static final String EXTRA_TASK_ID = "contactId";
+    private static final int DEFAULT_TASK_ID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,8 +41,8 @@ public class SIngleContactDetails extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        id = intent.getStringExtra("contact_id");
-        Log.d("TAG", id);
+        mContactId = intent.getIntExtra(EXTRA_TASK_ID, DEFAULT_TASK_ID);
+        Log.d("TAG", String.valueOf(mContactId));
 
         contactName = findViewById(R.id.single_contact_name);
         contactPhone = findViewById(R.id.single_contact_phone);
@@ -51,7 +53,6 @@ public class SIngleContactDetails extends AppCompatActivity {
         deleteContactBtn = findViewById(R.id.single_contact_delete);
 
         mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
-        mContactId = Integer.parseInt(id);
         Contact contactDetails = mContactViewModel.getContact(mContactId);
         loadData(contactDetails);
     }

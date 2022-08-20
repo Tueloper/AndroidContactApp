@@ -24,7 +24,7 @@ import android.view.MenuItem;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ContactListAdapter.ItemClickListener{
 
 //    private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final ContactListAdapter adapter = new ContactListAdapter(this);
+        final ContactListAdapter adapter = new ContactListAdapter(this, this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -120,5 +120,12 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+
+    @Override
+    public void onItemClickListener(int itemId) {
+        Intent intent = new Intent(MainActivity.this, SIngleContactDetails.class);
+        intent.putExtra(SIngleContactDetails.EXTRA_TASK_ID, itemId);
+        startActivity(intent);
     }
 }

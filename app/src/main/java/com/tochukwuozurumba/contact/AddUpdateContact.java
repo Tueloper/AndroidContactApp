@@ -25,7 +25,6 @@ public class AddUpdateContact extends AppCompatActivity {
     private String name, email, phone, note, imageUrl;
     private ActionBar actionBar;
     public static final String CONTACT_ID_STRING = "contactId";
-    public static final String EXTRA_TASK_ID = "extraTaskId";
     public static final String INSTANCE_TASK_ID = "instanceTaskId";
     private static final int DEFAULT_TASK_ID = -1;
     private static final String TAG = AddUpdateContact.class.getSimpleName();
@@ -66,10 +65,10 @@ public class AddUpdateContact extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        if (intent != null && intent.hasExtra(EXTRA_TASK_ID)) {
+        if (intent != null && intent.hasExtra(SIngleContactDetails.EXTRA_TASK_ID)) {
             submitButton.setText(R.string.update_button);
             if (mContactId == DEFAULT_TASK_ID) {
-                mContactId = intent.getIntExtra(EXTRA_TASK_ID, DEFAULT_TASK_ID);
+                mContactId = intent.getIntExtra(SIngleContactDetails.EXTRA_TASK_ID, DEFAULT_TASK_ID);
                 mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
                 Contact contactDetails = mContactViewModel.getContact(mContactId);
                 populateUI(contactDetails);

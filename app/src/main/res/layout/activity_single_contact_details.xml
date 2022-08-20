@@ -99,7 +99,7 @@
             android:layout_weight="1"
             android:text="Edit"
             android:textStyle="bold"
-            android:backgroundTint="#90EE90"
+            android:backgroundTint="@color/colorPrimary"
             android:textColor="@color/white"
             android:layout_gravity="center"
             android:layout_margin="@dimen/_5sdp" />
@@ -109,7 +109,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="Delete"
-            android:backgroundTint="#f00"
+            android:backgroundTint="@color/colorThemeExtra"
             android:textColor="@color/white"
             android:textStyle="normal"
             android:layout_gravity="center"

@@ -21,10 +21,12 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     String name, phone, email, note, imageUrl;
     int id;
     private Context mContext;
+    final private ItemClickListener mItemClickListener;
 
-    ContactListAdapter(Context context) {
+    ContactListAdapter(Context context, ItemClickListener listener) {
         mInflater = LayoutInflater.from(context);
         mContext = context;
+        mItemClickListener = listener;
     }
 
     @Override
@@ -60,14 +62,16 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             }
         });
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(mContext, SIngleContactDetails.class);
-                intent.putExtra("contact_id", id);
-                mContext.startActivity(intent);
-            }
-        });
+//        holder.itemView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Contact current = mContacts.get(holder.getAdapterPosition());
+//                Intent intent = new Intent(mContext, SIngleContactDetails.class);
+//                intent.putExtra("contact_id", current.getId());
+//                Log.d("TAG", String.valueOf(current.getId()));
+//                mContext.startActivity(intent);
+//            }
+//        });
     }
 
     void setContacts(List<Contact> contacts){
@@ -84,7 +88,11 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         else return 0;
     }
 
-    class ContactViewHolder extends RecyclerView.ViewHolder {
+    public interface ItemClickListener {
+        void onItemClickListener(int contactId);
+    }
+
+    class ContactViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         private final TextView contactNameItemView;
         private final TextView contactNumberItemView;
         private final ImageView contactImageItemView;
@@ -96,6 +104,17 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             contactNumberItemView = itemView.findViewById(R.id.contact_number);
             contactImageItemView = itemView.findViewById(R.id.contact_image);
             contactDialItemView = itemView.findViewById(R.id.dial_contact);
+        }
+
+        /**
+         * Called when a view has been clicked.
+         *
+         * @param v The view that was clicked.
+         */
+        @Override
+        public void onClick(View v) {
+            int elementId = mContacts.get(getAdapterPosition()).getId();
+            mItemClickListener.onItemClickListener(elementId);
         }
     }
 }

@@ -9,13 +9,13 @@
     <color name="white">#FFFFFFFF</color>
 
     <!--    customized colors-->
-    <color name="colorPrimary">#2196F3</color>
+    <color name="colorPrimary">#008080</color>
     <color name="colorPrimaryLight">#64b5f6</color>
     <color name="colorPrimaryDark">#1976D2</color>
-    <color name="colorSecondary">#2d3e52</color>
+    <color name="colorSecondary">#40B5AD</color>
 <!--    <color name="colorTextPrimary">#13b298</color>-->
     <color name="colorTextSecondary">#CBD5ED</color>
-    <color name="colorThemeExtra">#FF5252</color>
+    <color name="colorThemeExtra">#FF5733</color>
     <color name="colorAccent">#FFFF9800</color>
     <color name="colorTextPrimary">@android:color/white</color>
     <color name="colorScreenBackground">#fff3e0</color>
