@@ -23,11 +23,13 @@ public class ContactViewModel extends AndroidViewModel {
         return mAllContacts;
     }
 
-    public Contact getContact(int id) {
+    public Contact[] getContact(int id) {
         return mRepository.getmContact(id);
     }
 
     public void insert(Contact contact) {
         mRepository.insert(contact);
     }
+
+    public void deleteAll() {mRepository.deleteAll();}
 }

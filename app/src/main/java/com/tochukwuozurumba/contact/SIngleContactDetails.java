@@ -53,8 +53,8 @@ public class SIngleContactDetails extends AppCompatActivity {
         deleteContactBtn = findViewById(R.id.single_contact_delete);
 
         mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
-        Contact contactDetails = mContactViewModel.getContact(mContactId);
-        loadData(contactDetails);
+        Contact[] contactDetails = mContactViewModel.getContact(mContactId);
+        loadData(contactDetails[0]);
     }
 
 //    protected void onResume(){

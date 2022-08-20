@@ -21,6 +21,7 @@ import com.tochukwuozurumba.contact.databinding.ActivityMainBinding;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -89,7 +90,17 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.clear_data) {
+            // Add a toast just for confirmation
+            Toast.makeText(this, "Clearing the contacts...",
+                    Toast.LENGTH_SHORT).show();
+
+            // Delete the existing data
+            mContactViewModel.deleteAll();
+            return true;
         }
+
+
 
         return super.onOptionsItemSelected(item);
     }
@@ -128,4 +139,6 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
         intent.putExtra(SIngleContactDetails.EXTRA_TASK_ID, itemId);
         startActivity(intent);
     }
+
+
 }

@@ -21,10 +21,14 @@ public class ContactRepository {
         return mAllContacts;
     }
 
-    Contact getmContact(int id) { return mContactDao.getContact(id); };
+    Contact[] getmContact(int id) { return mContactDao.getContact(id); };
 
     public void insert(Contact word) {
         new insertAsyncTask(mContactDao).execute(word);
+    }
+
+    public void deleteAll()  {
+        new deleteAllWordsAsyncTask(mContactDao).execute();
     }
 
     public static class insertAsyncTask extends AsyncTask<Contact, Void, Void> {
@@ -57,6 +61,20 @@ public class ContactRepository {
         @Override
         protected Void doInBackground(final Contact... contacts) {
             mAsyncTaskDao.insert(contacts[0]);
+            return null;
+        }
+    }
+
+    private static class deleteAllWordsAsyncTask extends AsyncTask<Void, Void, Void> {
+        private ContactDao mAsyncTaskDao;
+
+        deleteAllWordsAsyncTask(ContactDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            mAsyncTaskDao.deleteAll();
             return null;
         }
     }

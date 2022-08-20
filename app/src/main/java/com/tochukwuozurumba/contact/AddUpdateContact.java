@@ -70,8 +70,8 @@ public class AddUpdateContact extends AppCompatActivity {
             if (mContactId == DEFAULT_TASK_ID) {
                 mContactId = intent.getIntExtra(SIngleContactDetails.EXTRA_TASK_ID, DEFAULT_TASK_ID);
                 mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
-                Contact contactDetails = mContactViewModel.getContact(mContactId);
-                populateUI(contactDetails);
+                Contact[] contactDetails = mContactViewModel.getContact(mContactId);
+                populateUI(contactDetails[0]);
             }
         }
 
