@@ -1,6 +1,7 @@
 package com.tochukwuozurumba.contact;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,8 +15,14 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
 
     private final LayoutInflater mInflater;
     private List<Contact> mContacts; // Cached copy of words
+    String name, phone, email, note, imageUrl;
+    int id;
+    private Context mContext;
 
-    ContactListAdapter(Context context) { mInflater = LayoutInflater.from(context); }
+    ContactListAdapter(Context context) {
+        mInflater = LayoutInflater.from(context);
+        mContext = context;
+    }
 
     @Override
     public ContactListAdapter.ContactViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -27,14 +34,17 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
     public void onBindViewHolder(ContactListAdapter.ContactViewHolder holder, int position) {
         if (mContacts != null) {
             Contact current = mContacts.get(position);
-            int id = current.getId();
-            String imageUrl = current.getImageUrl();
+            id = current.getId();
+            imageUrl = current.getImageUrl();
+            name = current.getName();
+            phone = current.getPhone();
+            note = current.getNote();
 
             if (imageUrl.equals("")) {
                 holder.contactImageItemView.setImageResource(R.drawable.ic_baseline_person_24dp);
             }
-            holder.contactNameItemView.setText(current.getName());
-            holder.contactNumberItemView.setText(current.getPhone());
+            holder.contactNameItemView.setText(name);
+            holder.contactNumberItemView.setText(phone);
         } else {
             // Covers the case of data not being ready yet.
             holder.contactNameItemView.setText("No Word");
@@ -44,6 +54,22 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             @Override
             public void onClick(View v) {
 //
+            }
+        });
+
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, SIngleContactDetails.class);
+
+                SharedPreferenceManager.setString("contact_name", name);
+                SharedPreferenceManager.setString("contact_phone", phone);
+                SharedPreferenceManager.setString("contact_email", email);
+                SharedPreferenceManager.setString("contact_note", note);
+                SharedPreferenceManager.setString("contact_imageUrl", imageUrl);
+                SharedPreferenceManager.setInt("contact_id", id);
+
+                mContext.startActivity(intent);
             }
         });
     }
@@ -66,7 +92,7 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
         private final TextView contactNameItemView;
         private final TextView contactNumberItemView;
         private final ImageView contactImageItemView;
-        private final TextView contactDialItemView;
+        private final ImageView contactDialItemView;
 
         private ContactViewHolder(View itemView) {
             super(itemView);

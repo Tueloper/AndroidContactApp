@@ -19,7 +19,7 @@ public class AddUpdateContact extends AppCompatActivity {
     private EditText personName, personPhone, personEmail, personNote;
 
 //    String Variables
-    String name, email, phone, note;
+    String name, email, phone, note, imageUrl;
 
 //    action variables
     ActionBar actionBar;
@@ -65,6 +65,8 @@ public class AddUpdateContact extends AppCompatActivity {
         email = personEmail.getText().toString();
         phone = personPhone.getText().toString();
         note = personNote.getText().toString();
+        imageUrl = personNote.getText().toString();
+
         Intent replyIntent = new Intent();
 
 //        validate inputs
@@ -86,6 +88,7 @@ public class AddUpdateContact extends AppCompatActivity {
             SharedPreferenceManager.setString("contact_phone", phone);
             SharedPreferenceManager.setString("contact_email", email);
             SharedPreferenceManager.setString("contact_note", note);
+            SharedPreferenceManager.setString("contact_imageUrl", imageUrl);
 
             setResult(RESULT_OK, replyIntent);
             finish();
