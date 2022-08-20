@@ -21,14 +21,22 @@ public class ContactRepository {
         return mAllContacts;
     }
 
-    Contact[] getmContact(int id) { return mContactDao.getContact(id); };
+    LiveData<Contact> getmContact(int id) { return mContactDao.getContact(id); };
 
     public void insert(Contact word) {
         new insertAsyncTask(mContactDao).execute(word);
     }
 
     public void deleteAll()  {
-        new deleteAllWordsAsyncTask(mContactDao).execute();
+        new deleteAllContactsAsyncTask(mContactDao).execute();
+    }
+
+    public void deleteContact(Contact contact)  {
+        new deleteContactAsyncTask(mContactDao).execute(contact);
+    }
+
+    public void updateContact(Contact contact)  {
+        new updateContactAsyncTask(mContactDao).execute(contact);
     }
 
     public static class insertAsyncTask extends AsyncTask<Contact, Void, Void> {
@@ -39,25 +47,6 @@ public class ContactRepository {
             mAsyncTaskDao = dao;
         }
 
-
-        /**
-         * Override this method to perform a computation on a background thread. The
-         * specified parameters are the parameters passed to {@link #execute}
-         * by the caller of this task.
-         * <p>
-         * This will normally run on a background thread. But to better
-         * support testing frameworks, it is recommended that this also tolerates
-         * direct execution on the foreground thread, as part of the {@link #execute} call.
-         * <p>
-         * This method can call {@link #publishProgress} to publish updates
-         * on the UI thread.
-         *
-         * @param contacts The parameters of the task.
-         * @return A result, defined by the subclass of this task.
-         * @see #onPreExecute()
-         * @see #onPostExecute
-         * @see #publishProgress
-         */
         @Override
         protected Void doInBackground(final Contact... contacts) {
             mAsyncTaskDao.insert(contacts[0]);
@@ -65,16 +54,44 @@ public class ContactRepository {
         }
     }
 
-    private static class deleteAllWordsAsyncTask extends AsyncTask<Void, Void, Void> {
+    private static class deleteAllContactsAsyncTask extends AsyncTask<Void, Void, Void> {
         private ContactDao mAsyncTaskDao;
 
-        deleteAllWordsAsyncTask(ContactDao dao) {
+        deleteAllContactsAsyncTask(ContactDao dao) {
             mAsyncTaskDao = dao;
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
             mAsyncTaskDao.deleteAll();
+            return null;
+        }
+    }
+
+    private static class deleteContactAsyncTask extends AsyncTask<Contact, Void, Void> {
+        private ContactDao mAsyncTaskDao;
+
+        deleteContactAsyncTask(ContactDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Contact... params) {
+            mAsyncTaskDao.deleteContact(params[0]);
+            return null;
+        }
+    }
+
+    private static class updateContactAsyncTask extends AsyncTask<Contact, Void, Void> {
+        private ContactDao mAsyncTaskDao;
+
+        updateContactAsyncTask(ContactDao dao) {
+            mAsyncTaskDao = dao;
+        }
+
+        @Override
+        protected Void doInBackground(final Contact... params) {
+            mAsyncTaskDao.deleteContact(params[0]);
             return null;
         }
     }

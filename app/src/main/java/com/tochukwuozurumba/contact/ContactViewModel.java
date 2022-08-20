@@ -23,7 +23,7 @@ public class ContactViewModel extends AndroidViewModel {
         return mAllContacts;
     }
 
-    public Contact[] getContact(int id) {
+    public LiveData<Contact> getContact(int id) {
         return mRepository.getmContact(id);
     }
 
@@ -32,4 +32,8 @@ public class ContactViewModel extends AndroidViewModel {
     }
 
     public void deleteAll() {mRepository.deleteAll();}
+
+    public void deleteContact(Contact contact) {mRepository.deleteContact(contact);}
+
+    public void updateContact(Contact contact) {mRepository.updateContact(contact);}
 }

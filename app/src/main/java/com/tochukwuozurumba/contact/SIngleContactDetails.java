@@ -2,9 +2,12 @@ package com.tochukwuozurumba.contact;
 
 import static com.tochukwuozurumba.contact.AddUpdateContact.CONTACT_ID_STRING;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class SIngleContactDetails extends AppCompatActivity {
 
@@ -53,8 +57,13 @@ public class SIngleContactDetails extends AppCompatActivity {
         deleteContactBtn = findViewById(R.id.single_contact_delete);
 
         mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
-        Contact[] contactDetails = mContactViewModel.getContact(mContactId);
-        loadData(contactDetails[0]);
+        mContactViewModel.getContact(mContactId).observe(this, new Observer<Contact>() {
+            @Override
+            public void onChanged(@Nullable Contact contact) {
+//                when a new word is added to live data, this observes the data and make changes when a new word is added
+                loadData(contact);
+            }
+        });
     }
 
 //    protected void onResume(){

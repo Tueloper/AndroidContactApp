@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.util.Log;
 import android.view.View;
 
@@ -25,7 +26,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements ContactListAdapter.ItemClickListener{
+public class MainActivity extends AppCompatActivity {
 
 //    private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
@@ -48,7 +49,7 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
 //        NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
-        final ContactListAdapter adapter = new ContactListAdapter(this, this);
+        final ContactListAdapter adapter = new ContactListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -71,6 +72,26 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
                 adapter.setContacts(contacts);
             }
         });
+
+        ItemTouchHelper helper = new ItemTouchHelper( new ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
+                    @Override
+                    public boolean onMove(RecyclerView recyclerView, RecyclerView.ViewHolder viewHolder, RecyclerView.ViewHolder target) {
+                        return false;
+                    }
+
+                    @Override
+                    public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
+                        int position = viewHolder.getAdapterPosition();
+                        Contact myContact = adapter.getWordAtPosition(position);
+                        Log.d("onSwiped",  myContact.getName());
+                        Toast.makeText(MainActivity.this, "Deleting " + myContact.getName(), Toast.LENGTH_LONG).show();
+
+                        // Delete the word
+                        mContactViewModel.deleteContact(myContact);
+                    }
+                });
+
+        helper.attachToRecyclerView(recyclerView);
     }
 
     @Override
@@ -133,12 +154,6 @@ public class MainActivity extends AppCompatActivity implements ContactListAdapte
 
     }
 
-    @Override
-    public void onItemClickListener(int itemId) {
-        Intent intent = new Intent(MainActivity.this, SIngleContactDetails.class);
-        intent.putExtra(SIngleContactDetails.EXTRA_TASK_ID, itemId);
-        startActivity(intent);
-    }
 
 
 }

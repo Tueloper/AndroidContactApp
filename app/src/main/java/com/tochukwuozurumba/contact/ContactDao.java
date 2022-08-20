@@ -25,7 +25,7 @@ public interface ContactDao {
     void updateContact(Contact... contact);
 
     @Query("SELECT * FROM contact_table WHERE id = :id")
-    Contact[] getContact(int id);
+    LiveData<Contact> getContact(int id);
 
     @Query("SELECT * FROM contact_table ORDER BY name ASC")
     LiveData<List<Contact>> getAllContact();
