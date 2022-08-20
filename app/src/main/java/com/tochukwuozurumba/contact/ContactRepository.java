@@ -13,13 +13,15 @@ public class ContactRepository {
 
     ContactRepository(Application application) {
         ContactRoomDatabase db = ContactRoomDatabase.getDatabase(application);
-        mContactDao = db.wordDao();
+        mContactDao = db.contactDao();
         mAllContacts = mContactDao.getAllContact();
     }
 
     LiveData<List<Contact>> getmAllContacts() {
         return mAllContacts;
     }
+
+    Contact getmContact(int id) { return mContactDao.getContact(id); };
 
     public void insert(Contact word) {
         new insertAsyncTask(mContactDao).execute(word);

@@ -9,7 +9,7 @@ import android.content.Context;
 public abstract class ContactRoomDatabase extends RoomDatabase {
 
     //    access to data access object
-    public abstract ContactDao wordDao();
+    public abstract ContactDao contactDao();
 
     //    create instance of the database
     private static ContactRoomDatabase INSTANCE;

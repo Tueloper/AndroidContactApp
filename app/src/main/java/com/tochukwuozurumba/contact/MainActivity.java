@@ -67,7 +67,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable List<Contact> contacts) {
 //                when a new word is added to live data, this observes the data and make changes when a new word is added
-                adapter.setWords(contacts);
+                adapter.setContacts(contacts);
             }
         });
     }

@@ -1,7 +1,10 @@
 package com.tochukwuozurumba.contact;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.support.design.widget.FloatingActionButton;
+import android.net.Uri;
+import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,18 +14,24 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class AddUpdateContact extends AppCompatActivity {
 
 //    define contact variables
     private ImageView profileImageView;
     private Button submitButton;
     private EditText personName, personPhone, personEmail, personNote;
-
-//    String Variables
-    String name, email, phone, note, imageUrl;
-
-//    action variables
-    ActionBar actionBar;
+    private String name, email, phone, note, imageUrl;
+    private ActionBar actionBar;
+    public static final String CONTACT_ID_STRING = "contactId";
+    public static final String EXTRA_TASK_ID = "extraTaskId";
+    public static final String INSTANCE_TASK_ID = "instanceTaskId";
+    private static final int DEFAULT_TASK_ID = -1;
+    private static final String TAG = AddUpdateContact.class.getSimpleName();
+    private int mContactId = DEFAULT_TASK_ID;
+    private ContactRoomDatabase mDb;
+    private ContactViewModel mContactViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +59,23 @@ public class AddUpdateContact extends AppCompatActivity {
         personNote = findViewById(R.id.personNote);
         submitButton = findViewById(R.id.submit_contact);
 
+        mDb = ContactRoomDatabase.getDatabase(getApplicationContext());
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_TASK_ID)) {
+            mContactId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
+        }
+
+        Intent intent = getIntent();
+        if (intent != null && intent.hasExtra(EXTRA_TASK_ID)) {
+            submitButton.setText(R.string.update_button);
+            if (mContactId == DEFAULT_TASK_ID) {
+                mContactId = intent.getIntExtra(EXTRA_TASK_ID, DEFAULT_TASK_ID);
+                mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
+                Contact contactDetails = mContactViewModel.getContact(mContactId);
+                populateUI(contactDetails);
+            }
+        }
+
 //        add submit listener
         submitButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +84,20 @@ public class AddUpdateContact extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(INSTANCE_TASK_ID, mContactId);
+        super.onSaveInstanceState(outState);
+    }
+
+    public void populateUI(Contact contact) {
+        profileImageView.setImageURI(Uri.parse(contact.getImageUrl()));
+        personNote.setText(contact.getNote());
+        personName.setText(contact.getName());
+        personEmail.setText(contact.getEmail());
+        personPhone.setText(contact.getPhone());
     }
 
     private void saveContact() {

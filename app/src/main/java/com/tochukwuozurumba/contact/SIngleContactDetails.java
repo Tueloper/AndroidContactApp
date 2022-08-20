@@ -1,5 +1,10 @@
 package com.tochukwuozurumba.contact;
 
+import static com.tochukwuozurumba.contact.AddUpdateContact.CONTACT_ID_STRING;
+
+import android.arch.lifecycle.ViewModelProviders;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,8 +22,10 @@ public class SIngleContactDetails extends AppCompatActivity {
     private ImageView contactImage;
     private Button editContactBtn, deleteContactBtn;
     private String name, phone, email, imageUrl, note;
-    private int id;
+    private String id;
+    private int mContactId;
     private ActionBar actionBar;
+    private ContactViewModel mContactViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +38,9 @@ public class SIngleContactDetails extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        SharedPreferenceManager.init(SIngleContactDetails.this);
+        Intent intent = getIntent();
+        id = intent.getStringExtra("contact_id");
+        Log.d("TAG", id);
 
         contactName = findViewById(R.id.single_contact_name);
         contactPhone = findViewById(R.id.single_contact_phone);
@@ -41,29 +50,28 @@ public class SIngleContactDetails extends AppCompatActivity {
         editContactBtn = findViewById(R.id.single_contact_edit);
         deleteContactBtn = findViewById(R.id.single_contact_delete);
 
-
+        mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
+        mContactId = Integer.parseInt(id);
+        Contact contactDetails = mContactViewModel.getContact(mContactId);
+        loadData(contactDetails);
     }
 
-    protected void onResume(){
-        super.onResume();
-        loadData();
-    }
+//    protected void onResume(){
+//        super.onResume();
+//        loadData();
+//    }
 
-    protected void loadData() {
-        name = SharedPreferenceManager.getString("contact_name", "");
-        phone = SharedPreferenceManager.getString("contact_phone", "");
-        email = SharedPreferenceManager.getString("contact_email", "");
-        note = SharedPreferenceManager.getString("contact_note", "");
-        imageUrl = SharedPreferenceManager.getString("contact_imageUrl", "");
-        id = SharedPreferenceManager.getInt("contact_id", 0);
+    protected void loadData(Contact contactDetails) {
 
-        contactName.setText(name);
-        contactPhone.setText(phone);
-        contactEmail.setText(email);
-        contactNote.setText(note);
+        contactName.setText(contactDetails.getName());
+        contactPhone.setText(contactDetails.getPhone());
+        contactEmail.setText(contactDetails.getEmail());
+        contactNote.setText(contactDetails.getNote());
 
 //        if (!(imageUrl == "")) {
-//            contactImage.setImageResource(Integer.parseInt(imageUrl));
+//            contactImage.setImageURI(Uri.parse(imageUrl));
+//        } else {
+//            contactImage.setImageResource(R.drawable.ic_baseline_person_24dp);
 //        }
     }
 }

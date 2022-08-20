@@ -1,8 +1,11 @@
 package com.tochukwuozurumba.contact;
 
+import static com.tochukwuozurumba.contact.AddUpdateContact.CONTACT_ID_STRING;
+
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,20 +64,13 @@ public class ContactListAdapter extends RecyclerView.Adapter<ContactListAdapter.
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(mContext, SIngleContactDetails.class);
-
-                SharedPreferenceManager.setString("contact_name", name);
-                SharedPreferenceManager.setString("contact_phone", phone);
-                SharedPreferenceManager.setString("contact_email", email);
-                SharedPreferenceManager.setString("contact_note", note);
-                SharedPreferenceManager.setString("contact_imageUrl", imageUrl);
-                SharedPreferenceManager.setInt("contact_id", id);
-
+                intent.putExtra("contact_id", id);
                 mContext.startActivity(intent);
             }
         });
     }
 
-    void setWords(List<Contact> contacts){
+    void setContacts(List<Contact> contacts){
         mContacts = contacts;
         notifyDataSetChanged();
     }
