@@ -1,6 +1,5 @@
 package com.tochukwuozurumba.contact;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
@@ -9,14 +8,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
-
-import java.util.List;
 
 public class AddUpdateContact extends AppCompatActivity {
 
@@ -28,11 +24,12 @@ public class AddUpdateContact extends AppCompatActivity {
     private ActionBar actionBar;
     public static final String CONTACT_ID_STRING = "contactId";
     public static final String INSTANCE_TASK_ID = "instanceTaskId";
-    private static final int DEFAULT_TASK_ID = -1;
+    private static final int DEFAULT_CONTACT_ID = -1;
     private static final String TAG = AddUpdateContact.class.getSimpleName();
-    private int mContactId = DEFAULT_TASK_ID;
+    private int mContactId = DEFAULT_CONTACT_ID;
     private ContactRoomDatabase mDb;
     private ContactViewModel mContactViewModel;
+    private Contact mContact;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,20 +60,22 @@ public class AddUpdateContact extends AppCompatActivity {
         mDb = ContactRoomDatabase.getDatabase(getApplicationContext());
 
         if (savedInstanceState != null && savedInstanceState.containsKey(INSTANCE_TASK_ID)) {
-            mContactId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_TASK_ID);
+            mContactId = savedInstanceState.getInt(INSTANCE_TASK_ID, DEFAULT_CONTACT_ID);
         }
 
         Intent intent = getIntent();
         if (intent != null && intent.hasExtra(SIngleContactDetails.EXTRA_TASK_ID)) {
             submitButton.setText(R.string.update_button);
-            if (mContactId == DEFAULT_TASK_ID) {
-                mContactId = intent.getIntExtra(SIngleContactDetails.EXTRA_TASK_ID, DEFAULT_TASK_ID);
+            actionBar.setTitle("Edit Contact");
+            if (mContactId == DEFAULT_CONTACT_ID) {
+                mContactId = intent.getIntExtra(SIngleContactDetails.EXTRA_TASK_ID, DEFAULT_CONTACT_ID);
                 mContactViewModel = ViewModelProviders.of(this).get(ContactViewModel.class);
                 mContactViewModel.getContact(mContactId).observe(this, new Observer<Contact>() {
                     @Override
                     public void onChanged(@Nullable Contact contact) {
 //                when a new word is added to live data, this observes the data and make changes when a new word is added
-                        Log.d("onChanged", String.valueOf(contact));
+                        populateUI(contact);
+                        mContact = contact;
                     }
                 });
             }
@@ -135,6 +134,8 @@ public class AddUpdateContact extends AppCompatActivity {
             SharedPreferenceManager.setString("contact_email", email);
             SharedPreferenceManager.setString("contact_note", note);
             SharedPreferenceManager.setString("contact_imageUrl", imageUrl);
+            SharedPreferenceManager.setInt("contact_id", mContactId);
+            SharedPreferenceManager.setInt("default_contact_id", DEFAULT_CONTACT_ID);
 
             setResult(RESULT_OK, replyIntent);
             finish();

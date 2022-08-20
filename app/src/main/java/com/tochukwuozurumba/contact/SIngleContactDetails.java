@@ -1,24 +1,16 @@
 package com.tochukwuozurumba.contact;
 
-import static com.tochukwuozurumba.contact.AddUpdateContact.CONTACT_ID_STRING;
-
-import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
-import android.net.Uri;
 import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ArrayAdapter;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class SIngleContactDetails extends AppCompatActivity {
 
@@ -28,10 +20,11 @@ public class SIngleContactDetails extends AppCompatActivity {
     private String name, phone, email, imageUrl, note;
     private int id;
     private int mContactId;
+    private Contact mContact;
     private ActionBar actionBar;
     private ContactViewModel mContactViewModel;
     public static final String EXTRA_TASK_ID = "contactId";
-    private static final int DEFAULT_TASK_ID = -1;
+    private static final int DEFAULT_CONTACT_ID = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,8 +38,7 @@ public class SIngleContactDetails extends AppCompatActivity {
         }
 
         Intent intent = getIntent();
-        mContactId = intent.getIntExtra(EXTRA_TASK_ID, DEFAULT_TASK_ID);
-        Log.d("TAG", String.valueOf(mContactId));
+        mContactId = intent.getIntExtra(EXTRA_TASK_ID, DEFAULT_CONTACT_ID);
 
         contactName = findViewById(R.id.single_contact_name);
         contactPhone = findViewById(R.id.single_contact_phone);
@@ -62,14 +54,27 @@ public class SIngleContactDetails extends AppCompatActivity {
             public void onChanged(@Nullable Contact contact) {
 //                when a new word is added to live data, this observes the data and make changes when a new word is added
                 loadData(contact);
+                mContact = contact;
+            }
+        });
+
+        deleteContactBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Delete the word
+                mContactViewModel.deleteContact(mContact);
+            }
+        });
+
+        editContactBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(v.getContext(), AddUpdateContact.class);
+                intent.putExtra(SIngleContactDetails.EXTRA_TASK_ID, mContactId);
+                v.getContext().startActivity(intent);
             }
         });
     }
-
-//    protected void onResume(){
-//        super.onResume();
-//        loadData();
-//    }
 
     protected void loadData(Contact contactDetails) {
 

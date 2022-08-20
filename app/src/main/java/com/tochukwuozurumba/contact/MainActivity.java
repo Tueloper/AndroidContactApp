@@ -83,7 +83,6 @@ public class MainActivity extends AppCompatActivity {
                     public void onSwiped(RecyclerView.ViewHolder viewHolder, int direction) {
                         int position = viewHolder.getAdapterPosition();
                         Contact myContact = adapter.getWordAtPosition(position);
-                        Log.d("onSwiped",  myContact.getName());
                         Toast.makeText(MainActivity.this, "Deleting " + myContact.getName(), Toast.LENGTH_LONG).show();
 
                         // Delete the word
@@ -121,17 +120,8 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
-
-
         return super.onOptionsItemSelected(item);
     }
-
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
-//        return NavigationUI.navigateUp(navController, appBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == NEW_WORD_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
@@ -142,9 +132,20 @@ public class MainActivity extends AppCompatActivity {
                 String email = SharedPreferenceManager.getString("contact_email", "");
                 String note = SharedPreferenceManager.getString("contact_note", "");
                 String imageUrl = SharedPreferenceManager.getString("contact_imageUrl", "");
+                int contactId = SharedPreferenceManager.getInt("contact_id", 0);
+                int defaultContactId = SharedPreferenceManager.getInt("default_contact_id", 0);
 
                 Contact contact = new Contact(name, phone, email, note, imageUrl);
-                mContactViewModel.insert(contact);
+
+                if (contactId == defaultContactId) {
+                    mContactViewModel.insert(contact);
+                } else {
+                    //update task
+                    Log.d("onActivityResult", String.valueOf(contactId));
+                    contact.setId(contactId);
+                    mContactViewModel.updateContact(contact);
+                }
+
 
             } catch (Exception ex) {
                 Log.d("unique", ex.toString());

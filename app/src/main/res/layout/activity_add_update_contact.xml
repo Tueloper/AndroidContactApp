@@ -97,8 +97,8 @@
             android:background="@color/colorTextPrimary"
             android:contentDescription="@string/add_contact"
             android:textColor="#311B92"
-            android:text="Submit"
-            tools:text="Submit" />
+            android:text="@string/save_button"
+            tools:text="Save Contact" />
     </LinearLayout>
 
 
